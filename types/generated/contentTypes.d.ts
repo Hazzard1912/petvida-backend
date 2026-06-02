@@ -456,6 +456,9 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     heroSubtitle: Schema.Attribute.Text & Schema.Attribute.Required;
     heroTitle: Schema.Attribute.String & Schema.Attribute.Required;
+    historiaContent: Schema.Attribute.Text & Schema.Attribute.Required;
+    historiaTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Nuestra Historia'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
