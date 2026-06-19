@@ -510,6 +510,53 @@ export interface ApiNoticiaNoticia extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiPetPet extends Struct.CollectionTypeSchema {
+  collectionName: 'pets';
+  info: {
+    description: 'Mascotas disponibles para adopci\u00F3n';
+    displayName: 'Pet';
+    pluralName: 'pets';
+    singularName: 'pet';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    adoptedDated: Schema.Attribute.Date;
+    ageGroup: Schema.Attribute.Enumeration<
+      ['cachorro', 'joven', 'adulto', 'senior']
+    > &
+      Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    estadoInventario: Schema.Attribute.Enumeration<
+      ['disponible', 'reservado', 'adoptado', 'retirado']
+    > &
+      Schema.Attribute.DefaultTo<'disponible'>;
+    gender: Schema.Attribute.Enumeration<['macho', 'hembra']> &
+      Schema.Attribute.Required;
+    isAdopted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::pet.pet'> &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    notasInventario: Schema.Attribute.Text;
+    photos: Schema.Attribute.Media<'images', true>;
+    publishedAt: Schema.Attribute.DateTime;
+    size: Schema.Attribute.Enumeration<['peque\u00F1o', 'mediano', 'grande']> &
+      Schema.Attribute.Required;
+    species: Schema.Attribute.Enumeration<['perro', 'gato']> &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    validadoInventario: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -1023,6 +1070,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::homepage.homepage': ApiHomepageHomepage;
       'api::noticia.noticia': ApiNoticiaNoticia;
+      'api::pet.pet': ApiPetPet;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
