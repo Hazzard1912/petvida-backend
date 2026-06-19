@@ -1,0 +1,67 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pets",
+  "info": {
+    "singularName": "pet",
+    "pluralName": "pets",
+    "displayName": "Pet",
+    "description": "Mascotas disponibles para adopción"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "species": {
+      "type": "enumeration",
+      "enum": ["perro", "gato"],
+      "required": true
+    },
+    "ageGroup": {
+      "type": "enumeration",
+      "enum": ["cachorro", "joven", "adulto", "senior"],
+      "required": true
+    },
+    "gender": {
+      "type": "enumeration",
+      "enum": ["macho", "hembra"],
+      "required": true
+    },
+    "size": {
+      "type": "enumeration",
+      "enum": ["pequeño", "mediano", "grande"],
+      "required": true
+    },
+    "isAdopted": {
+      "type": "boolean",
+      "default": false
+    },
+    "adoptedDated": {
+      "type": "date"
+    },
+    "estadoInventario": {
+      "type": "enumeration",
+      "enum": ["disponible", "reservado", "adoptado", "retirado"],
+      "default": "disponible"
+    },
+    "validadoInventario": {
+      "type": "boolean",
+      "default": false
+    },
+    "notasInventario": {
+      "type": "text"
+    },
+    "photos": {
+      "type": "media",
+      "allowedTypes": ["images"],
+      "multiple": true
+    }
+  }
+}
