@@ -440,6 +440,89 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAdopterAdopter extends Struct.CollectionTypeSchema {
+  collectionName: 'adopters';
+  info: {
+    description: 'Personas interesadas en adoptar';
+    displayName: 'Adopter';
+    pluralName: 'adopters';
+    singularName: 'adopter';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    address: Schema.Attribute.String & Schema.Attribute.Required;
+    adoptionRequests: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::adoption-request.adoption-request'
+    >;
+    age: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 18;
+        },
+        number
+      >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::adopter.adopter'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    neighborhood: Schema.Attribute.String & Schema.Attribute.Required;
+    phone: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAdoptionRequestAdoptionRequest
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'adoption_requests';
+  info: {
+    description: 'Solicitudes de adopcion';
+    displayName: 'Adoption Request';
+    pluralName: 'adoption-requests';
+    singularName: 'adoption-request';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    adopter: Schema.Attribute.Relation<'manyToOne', 'api::adopter.adopter'>;
+    adoptionReason: Schema.Attribute.Text & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::adoption-request.adoption-request'
+    > &
+      Schema.Attribute.Private;
+    pet: Schema.Attribute.Relation<'manyToOne', 'api::pet.pet'>;
+    publishedAt: Schema.Attribute.DateTime;
+    status: Schema.Attribute.Enumeration<
+      ['pendiente', 'aprobada', 'rechazada']
+    > &
+      Schema.Attribute.DefaultTo<'pendiente'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
   collectionName: 'homepages';
   info: {
@@ -523,6 +606,10 @@ export interface ApiPetPet extends Struct.CollectionTypeSchema {
   };
   attributes: {
     adoptedDated: Schema.Attribute.Date;
+    adoptionRequests: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::adoption-request.adoption-request'
+    >;
     ageGroup: Schema.Attribute.Enumeration<
       ['cachorro', 'joven', 'adulto', 'senior']
     > &
@@ -549,11 +636,94 @@ export interface ApiPetPet extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required;
     species: Schema.Attribute.Enumeration<['perro', 'gato']> &
       Schema.Attribute.Required;
+    sponsorRequests: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::sponsor-request.sponsor-request'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     validadoInventario: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
+  };
+}
+
+export interface ApiSponsorRequestSponsorRequest
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'sponsor_requests';
+  info: {
+    description: 'Solicitudes de apadrinamiento';
+    displayName: 'Sponsor Request';
+    pluralName: 'sponsor-requests';
+    singularName: 'sponsor-request';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::sponsor-request.sponsor-request'
+    > &
+      Schema.Attribute.Private;
+    monthlyAmount: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    pet: Schema.Attribute.Relation<'manyToOne', 'api::pet.pet'>;
+    publishedAt: Schema.Attribute.DateTime;
+    sponsor: Schema.Attribute.Relation<'manyToOne', 'api::sponsor.sponsor'>;
+    status: Schema.Attribute.Enumeration<['pendiente', 'activa', 'cancelada']> &
+      Schema.Attribute.DefaultTo<'pendiente'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSponsorSponsor extends Struct.CollectionTypeSchema {
+  collectionName: 'sponsors';
+  info: {
+    description: 'Personas interesadas en apadrinar';
+    displayName: 'Sponsor';
+    pluralName: 'sponsors';
+    singularName: 'sponsor';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    address: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::sponsor.sponsor'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    phone: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    sponsorRequests: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::sponsor-request.sponsor-request'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -1068,9 +1238,13 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::adopter.adopter': ApiAdopterAdopter;
+      'api::adoption-request.adoption-request': ApiAdoptionRequestAdoptionRequest;
       'api::homepage.homepage': ApiHomepageHomepage;
       'api::noticia.noticia': ApiNoticiaNoticia;
       'api::pet.pet': ApiPetPet;
+      'api::sponsor-request.sponsor-request': ApiSponsorRequestSponsorRequest;
+      'api::sponsor.sponsor': ApiSponsorSponsor;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
