@@ -62,6 +62,18 @@
       "type": "media",
       "allowedTypes": ["images"],
       "multiple": true
+    },
+    "adoptionRequests": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::adoption-request.adoption-request",
+      "mappedBy": "pet"
+    },
+    "sponsorRequests": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::sponsor-request.sponsor-request",
+      "mappedBy": "pet"
     }
   }
 }

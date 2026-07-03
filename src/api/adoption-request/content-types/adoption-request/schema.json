@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "adoption_requests",
+  "info": {
+    "singularName": "adoption-request",
+    "pluralName": "adoption-requests",
+    "displayName": "Adoption Request",
+    "description": "Solicitudes de adopcion"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "pet": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::pet.pet",
+      "inversedBy": "adoptionRequests"
+    },
+    "adopter": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::adopter.adopter",
+      "inversedBy": "adoptionRequests"
+    },
+    "adoptionReason": {
+      "type": "text",
+      "required": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["pendiente", "aprobada", "rechazada"],
+      "default": "pendiente"
+    }
+  }
+}
