@@ -30,7 +30,7 @@ export default {
       filters: {
         adopter: { ...adopter },
         pet: { ...pet },
-        status: 'pendiente',
+        requestStatus: 'pendiente',
       },
     });
 
@@ -42,7 +42,7 @@ export default {
   async afterUpdate(event) {
     const { result } = event;
 
-    if (result?.status === 'aprobada') {
+    if (result?.requestStatus === 'aprobada') {
       try {
         const { documentId } = result;
 

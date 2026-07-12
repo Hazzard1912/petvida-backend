@@ -30,7 +30,7 @@ export default {
       filters: {
         sponsor: { ...sponsor },
         pet: { ...pet },
-        status: 'pendiente',
+        requestStatus: 'pendiente',
       },
     });
 

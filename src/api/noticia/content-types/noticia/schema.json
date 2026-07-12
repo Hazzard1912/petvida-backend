@@ -11,24 +11,34 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "title": {
+    "titulo": {
       "type": "string",
       "required": true
     },
     "slug": {
       "type": "uid",
-      "targetField": "title",
+      "targetField": "titulo",
       "required": true
     },
-    "description": {
+    "resumen": {
       "type": "text",
       "required": true
     },
-    "content": {
-      "type": "blocks",
+    "contenido": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "Noticias Editor"
+      },
       "required": true
     },
-    "publishedAtDate": {
+    "imagen": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"]
+    },
+    "fecha": {
       "type": "date",
       "required": true
     }

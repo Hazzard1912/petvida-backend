@@ -15,9 +15,11 @@
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.47.0",
-    "@strapi/plugin-users-permissions": "5.47.0",
-    "@strapi/strapi": "5.47.0",
+    "@_sh/strapi-plugin-ckeditor": "^6.0.3",
+    "@strapi/plugin-cloud": "5.48.1",
+    "@strapi/plugin-users-permissions": "5.48.1",
+    "@strapi/provider-upload-cloudinary": "5.48.1",
+    "@strapi/strapi": "5.48.1",
     "better-sqlite3": "12.8.0",
     "prismjs": "^1.30.0",
     "react": "^18.0.0",

@@ -513,10 +513,36 @@ export interface ApiAdoptionRequestAdoptionRequest
       Schema.Attribute.Private;
     pet: Schema.Attribute.Relation<'manyToOne', 'api::pet.pet'>;
     publishedAt: Schema.Attribute.DateTime;
-    status: Schema.Attribute.Enumeration<
+    requestStatus: Schema.Attribute.Enumeration<
       ['pendiente', 'aprobada', 'rechazada']
     > &
       Schema.Attribute.DefaultTo<'pendiente'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiFaqFaq extends Struct.SingleTypeSchema {
+  collectionName: 'faqs';
+  info: {
+    displayName: 'FAQ';
+    pluralName: 'faqs';
+    singularName: 'faq';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::faq.faq'> &
+      Schema.Attribute.Private;
+    preguntas: Schema.Attribute.Component<'faq.preguntas', true>;
+    publishedAt: Schema.Attribute.DateTime;
+    titulo: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -572,11 +598,19 @@ export interface ApiNoticiaNoticia extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    content: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    contenido: Schema.Attribute.RichText &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'Noticias Editor';
+        }
+      >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    fecha: Schema.Attribute.Date & Schema.Attribute.Required;
+    imagen: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -584,9 +618,9 @@ export interface ApiNoticiaNoticia extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    publishedAtDate: Schema.Attribute.Date & Schema.Attribute.Required;
-    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
+    resumen: Schema.Attribute.Text & Schema.Attribute.Required;
+    slug: Schema.Attribute.UID<'titulo'> & Schema.Attribute.Required;
+    titulo: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -648,6 +682,48 @@ export interface ApiPetPet extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiProductoProducto extends Struct.CollectionTypeSchema {
+  collectionName: 'productos';
+  info: {
+    description: 'Productos solidarios del catalogo de la fundacion';
+    displayName: 'Producto';
+    pluralName: 'productos';
+    singularName: 'producto';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    descripcion: Schema.Attribute.Text & Schema.Attribute.Required;
+    destacado: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    imagen: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::producto.producto'
+    > &
+      Schema.Attribute.Private;
+    nombre: Schema.Attribute.String & Schema.Attribute.Required;
+    precio: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'nombre'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    whatsappMensaje: Schema.Attribute.Text;
+  };
+}
+
 export interface ApiSponsorRequestSponsorRequest
   extends Struct.CollectionTypeSchema {
   collectionName: 'sponsor_requests';
@@ -680,9 +756,11 @@ export interface ApiSponsorRequestSponsorRequest
       >;
     pet: Schema.Attribute.Relation<'manyToOne', 'api::pet.pet'>;
     publishedAt: Schema.Attribute.DateTime;
-    sponsor: Schema.Attribute.Relation<'manyToOne', 'api::sponsor.sponsor'>;
-    status: Schema.Attribute.Enumeration<['pendiente', 'activa', 'cancelada']> &
+    requestStatus: Schema.Attribute.Enumeration<
+      ['pendiente', 'activa', 'cancelada']
+    > &
       Schema.Attribute.DefaultTo<'pendiente'>;
+    sponsor: Schema.Attribute.Relation<'manyToOne', 'api::sponsor.sponsor'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1240,9 +1318,11 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::adopter.adopter': ApiAdopterAdopter;
       'api::adoption-request.adoption-request': ApiAdoptionRequestAdoptionRequest;
+      'api::faq.faq': ApiFaqFaq;
       'api::homepage.homepage': ApiHomepageHomepage;
       'api::noticia.noticia': ApiNoticiaNoticia;
       'api::pet.pet': ApiPetPet;
+      'api::producto.producto': ApiProductoProducto;
       'api::sponsor-request.sponsor-request': ApiSponsorRequestSponsorRequest;
       'api::sponsor.sponsor': ApiSponsorSponsor;
       'plugin::content-releases.release': PluginContentReleasesRelease;

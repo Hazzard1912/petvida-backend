@@ -28,7 +28,7 @@
       "type": "text",
       "required": true
     },
-    "status": {
+    "requestStatus": {
       "type": "enumeration",
       "enum": ["pendiente", "aprobada", "rechazada"],
       "default": "pendiente"
