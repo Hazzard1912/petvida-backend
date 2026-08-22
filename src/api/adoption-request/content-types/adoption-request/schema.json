@@ -28,6 +28,10 @@
       "type": "text",
       "required": true
     },
+    "convivencia": {
+      "type": "enumeration",
+      "enum": ["solo", "con otros"]
+    },
     "requestStatus": {
       "type": "enumeration",
       "enum": ["pendiente", "aprobada", "rechazada"],

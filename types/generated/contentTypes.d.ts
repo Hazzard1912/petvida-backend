@@ -502,6 +502,7 @@ export interface ApiAdoptionRequestAdoptionRequest
   attributes: {
     adopter: Schema.Attribute.Relation<'manyToOne', 'api::adopter.adopter'>;
     adoptionReason: Schema.Attribute.Text & Schema.Attribute.Required;
+    convivencia: Schema.Attribute.Enumeration<['solo', 'con otros']>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -641,7 +642,6 @@ export interface ApiPetPet extends Struct.CollectionTypeSchema {
       ['cachorro', 'joven', 'adulto', 'senior']
     > &
       Schema.Attribute.Required;
-    convivencia: Schema.Attribute.Enumeration<['solo', 'con otros']>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
