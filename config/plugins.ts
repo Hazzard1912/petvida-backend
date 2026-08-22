@@ -1,6 +1,9 @@
 import type { Core } from '@strapi/strapi';
 
 const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => ({
+  ckeditor5: {
+    enabled: false,
+  },
   upload: {
     config: {
       provider: 'cloudinary',

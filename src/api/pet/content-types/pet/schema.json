@@ -39,6 +39,10 @@
       "enum": ["pequeño", "mediano", "grande"],
       "required": true
     },
+    "convivencia": {
+      "type": "enumeration",
+      "enum": ["solo", "con otros"]
+    },
     "isAdopted": {
       "type": "boolean",
       "default": false

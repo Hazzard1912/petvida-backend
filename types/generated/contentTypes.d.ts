@@ -598,14 +598,7 @@ export interface ApiNoticiaNoticia extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    contenido: Schema.Attribute.RichText &
-      Schema.Attribute.Required &
-      Schema.Attribute.CustomField<
-        'plugin::ckeditor5.CKEditor',
-        {
-          preset: 'Noticias Editor';
-        }
-      >;
+    contenido: Schema.Attribute.RichText & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -648,6 +641,7 @@ export interface ApiPetPet extends Struct.CollectionTypeSchema {
       ['cachorro', 'joven', 'adulto', 'senior']
     > &
       Schema.Attribute.Required;
+    convivencia: Schema.Attribute.Enumeration<['solo', 'con otros']>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

@@ -25,11 +25,7 @@
       "required": true
     },
     "contenido": {
-      "type": "customField",
-      "customField": "plugin::ckeditor5.CKEditor",
-      "options": {
-        "preset": "Noticias Editor"
-      },
+      "type": "richtext",
       "required": true
     },
     "imagen": {
