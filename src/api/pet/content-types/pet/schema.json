@@ -21,22 +21,21 @@
     },
     "species": {
       "type": "enumeration",
-      "enum": ["perro", "gato"],
+      "enum": ["Perro", "Gato"],
       "required": true
     },
     "ageGroup": {
-      "type": "enumeration",
-      "enum": ["cachorro", "joven", "adulto", "senior"],
+      "type": "string",
       "required": true
     },
     "gender": {
       "type": "enumeration",
-      "enum": ["macho", "hembra"],
+      "enum": ["Macho", "Hembra"],
       "required": true
     },
     "size": {
       "type": "enumeration",
-      "enum": ["pequeño", "mediano", "grande"],
+      "enum": ["Pequeño", "Mediano", "Grande"],
       "required": true
     },
     "isAdopted": {
@@ -48,8 +47,8 @@
     },
     "estadoInventario": {
       "type": "enumeration",
-      "enum": ["disponible", "reservado", "adoptado", "retirado"],
-      "default": "disponible"
+      "enum": ["En Adopción", "Reservado", "Adoptado", "Retirado"],
+      "default": "En Adopción"
     },
     "validadoInventario": {
       "type": "boolean",

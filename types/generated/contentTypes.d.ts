@@ -644,19 +644,16 @@ export interface ApiPetPet extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::adoption-request.adoption-request'
     >;
-    ageGroup: Schema.Attribute.Enumeration<
-      ['cachorro', 'joven', 'adulto', 'senior']
-    > &
-      Schema.Attribute.Required;
+    ageGroup: Schema.Attribute.String & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
     estadoInventario: Schema.Attribute.Enumeration<
-      ['disponible', 'reservado', 'adoptado', 'retirado']
+      ['En Adopci\u00F3n', 'Reservado', 'Adoptado', 'Retirado']
     > &
-      Schema.Attribute.DefaultTo<'disponible'>;
-    gender: Schema.Attribute.Enumeration<['macho', 'hembra']> &
+      Schema.Attribute.DefaultTo<'En Adopci\u00F3n'>;
+    gender: Schema.Attribute.Enumeration<['Macho', 'Hembra']> &
       Schema.Attribute.Required;
     isAdopted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -666,9 +663,9 @@ export interface ApiPetPet extends Struct.CollectionTypeSchema {
     notasInventario: Schema.Attribute.Text;
     photos: Schema.Attribute.Media<'images', true>;
     publishedAt: Schema.Attribute.DateTime;
-    size: Schema.Attribute.Enumeration<['peque\u00F1o', 'mediano', 'grande']> &
+    size: Schema.Attribute.Enumeration<['Peque\u00F1o', 'Mediano', 'Grande']> &
       Schema.Attribute.Required;
-    species: Schema.Attribute.Enumeration<['perro', 'gato']> &
+    species: Schema.Attribute.Enumeration<['Perro', 'Gato']> &
       Schema.Attribute.Required;
     sponsorRequests: Schema.Attribute.Relation<
       'oneToMany',
