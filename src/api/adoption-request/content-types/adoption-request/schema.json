@@ -24,6 +24,11 @@
       "target": "api::adopter.adopter",
       "inversedBy": "adoptionRequests"
     },
+    "convivencia": {
+      "type": "enumeration",
+      "enum": ["Solo", "Con otros"],
+      "required": true
+    },
     "adoptionReason": {
       "type": "text",
       "required": true

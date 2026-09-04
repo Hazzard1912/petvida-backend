@@ -502,6 +502,8 @@ export interface ApiAdoptionRequestAdoptionRequest
   attributes: {
     adopter: Schema.Attribute.Relation<'manyToOne', 'api::adopter.adopter'>;
     adoptionReason: Schema.Attribute.Text & Schema.Attribute.Required;
+    convivencia: Schema.Attribute.Enumeration<['Solo', 'Con otros']> &
+      Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
